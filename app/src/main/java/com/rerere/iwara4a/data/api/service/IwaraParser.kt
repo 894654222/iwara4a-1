@@ -69,7 +69,7 @@ class IwaraParser(
                 // 首先访问login页面解析出 antibot_key
                 Log.i(TAG, "login: 开始发起请求: $username/$password")
                 val keyRequest = Request.Builder()
-                    .url("https://ecchi.iwara.tv/user/login?destination=front&language=zh-hans")
+                    .url("https://staging.iwara.tv/login?destination=front&language=zh-hans")
                     .get()
                     .build()
                 val keyResponse = okHttpClient.newCall(keyRequest).await()
@@ -97,7 +97,7 @@ class IwaraParser(
                     .add("op", "ログイン")
                     .build()
                 val loginRequest = Request.Builder()
-                    .url("https://ecchi.iwara.tv/user/login?destination=front&language=zh-hans")
+                    .url("https://staging.iwara.tv/login?destination=front&language=zh-hans")
                     .post(formBody)
                     .build()
                 val loginResponse = okHttpClient.newCall(loginRequest).await()
@@ -295,7 +295,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/images/$imageId")
+                    .url("https://staging.iwara.tv/images/$imageId")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -386,7 +386,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/videos/$videoId?language=zh-hans")
+                    .url("https://staging.iwara.tv/videos/$videoId?language=zh-hans")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -608,7 +608,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/flag/${if (like) "flag" else "unflag"}/like/$likeLink")
+                    .url("https://staging.iwara.tv/flag/${if (like) "flag" else "unflag"}/like/$likeLink")
                     .post(FormBody.Builder().add("js", "true").build())
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -634,7 +634,7 @@ class IwaraParser(
             okHttpClient.getCookie().init(session)
 
             val request = Request.Builder()
-                .url("https://ecchi.iwara.tv/flag/${if (follow) "flag" else "unflag"}/follow/$followLink")
+                .url("https://staging.iwara.tv/flag/${if (follow) "flag" else "unflag"}/follow/$followLink")
                 .post(FormBody.Builder().add("js", "true").build())
                 .build()
             val response = okHttpClient.newCall(request).await()
@@ -663,7 +663,7 @@ class IwaraParser(
             Log.i(TAG, "getCommentList: Loading comments of: $mediaId (${mediaType.value})")
 
             val request = Request.Builder()
-                .url("https://ecchi.iwara.tv/${mediaType.value}/$mediaId?page=$page")
+                .url("https://staging.iwara.tv/${mediaType.value}/$mediaId?page=$page")
                 .get()
                 .build()
             val response = okHttpClient.newCall(request).await()
@@ -797,7 +797,7 @@ class IwaraParser(
             val filters = collectFilters()
 
             val request = Request.Builder()
-                .url("https://ecchi.iwara.tv/${mediaType.value}?page=$page&sort=${sort.value}" + if (filter.isNotEmpty()) "&${filters}" else "")
+                .url("https://staging.iwara.tv/${mediaType.value}?page=$page&sort=${sort.value}" + if (filter.isNotEmpty()) "&${filters}" else "")
                 .get()
                 .build()
             val response = mediaHttpClient.newCall(request).await()
@@ -812,7 +812,7 @@ class IwaraParser(
                 val pic =
                     "https:" + (it.getElementsByClass("field-item even").select("img")
                         .first()?.attr("src")
-                        ?: "//ecchi.iwara.tv/sites/all/themes/main/img/logo.png")
+                        ?: "//staging.iwara.tv/sites/all/themes/main/img/logo.png")
                 val likes = it.getElementsByClass("right-icon").text()
                 val watchs = it.getElementsByClass("left-icon").text()
                 val link = it.select("a").first()!!.attr("href")
@@ -858,7 +858,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/users/$userId")
+                    .url("https://staging.iwara.tv/users/$userId")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -978,7 +978,7 @@ class IwaraParser(
             okHttpClient.getCookie().init(session)
 
             val request = Request.Builder()
-                .url("https://ecchi.iwara.tv/users/$userIdOnVideo/${mediaType.value}?page=$page")
+                .url("https://staging.iwara.tv/users/$userIdOnVideo/${mediaType.value}?page=$page")
                 .get()
                 .build()
 
@@ -994,7 +994,7 @@ class IwaraParser(
                 val pic =
                     "https:" + (it.getElementsByClass("field-item even").select("img")
                         .first()?.attr("src")
-                        ?: "//ecchi.iwara.tv/sites/all/themes/main/img/logo.png")
+                        ?: "//staging.iwara.tv/sites/all/themes/main/img/logo.png")
                 val likes = it.getElementsByClass("right-icon").text()
                 val watchs = it.getElementsByClass("left-icon").text()
                 val link = it.select("a").first()!!.attr("href")
@@ -1043,7 +1043,7 @@ class IwaraParser(
             Log.i(TAG, "getUserPageComment: user = $userId, page = $page")
 
             val request = Request.Builder()
-                .url("https://ecchi.iwara.tv/users/$userId?page=$page")
+                .url("https://staging.iwara.tv/users/$userId?page=$page")
                 .get()
                 .build()
 
@@ -1178,7 +1178,7 @@ class IwaraParser(
             val filters = collectFilters()
 
             val request = Request.Builder()
-                .url("https://ecchi.iwara.tv/search?query=$query&sort=${sort.value}&page=$page" + if (filter.isNotEmpty()) "&${filters}" else "")
+                .url("https://staging.iwara.tv/search?query=$query&sort=${sort.value}&page=$page" + if (filter.isNotEmpty()) "&${filters}" else "")
                 .get()
                 .build()
             val response = okHttpClient.newCall(request).await()
@@ -1262,7 +1262,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/user/liked?page=$page")
+                    .url("https://staging.iwara.tv/user/liked?page=$page")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -1276,7 +1276,7 @@ class IwaraParser(
                     val pic =
                         "https:" + (it.getElementsByClass("field-item even").select("img")
                             .first()?.attr("src")
-                            ?: "//ecchi.iwara.tv/sites/all/themes/main/img/logo.png")
+                            ?: "//staging.iwara.tv/sites/all/themes/main/img/logo.png")
                     val likes = it.getElementsByClass("right-icon").text()
                     val watchs = it.getElementsByClass("left-icon").text()
                     val link = it.select("a").first()!!.attr("href")
@@ -1331,7 +1331,7 @@ class IwaraParser(
                 Log.i(TAG, "postComment: $nid | $commentId | $content")
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/comment/reply/$nid" + if (commentId != null) "/$commentId" else "")
+                    .url("https://staging.iwara.tv/comment/reply/$nid" + if (commentId != null) "/$commentId" else "")
                     .post(
                         FormBody.Builder()
                             .add("op", "添加评论")
@@ -1360,7 +1360,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/my-content")
+                    .url("https://staging.iwara.tv/my-content")
                     .get()
                     .build()
 
@@ -1399,7 +1399,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/playlist/$playlistId")
+                    .url("https://staging.iwara.tv/playlist/$playlistId")
                     .get()
                     .build()
 
@@ -1477,7 +1477,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/node/$id/delete?destination=my-content")
+                    .url("https://staging.iwara.tv/node/$id/delete?destination=my-content")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -1492,7 +1492,7 @@ class IwaraParser(
                     } ?: error("null form")
 
                 val deleteRequest = Request.Builder()
-                    .url("https://ecchi.iwara.tv/node/$id/delete?destination=my-content")
+                    .url("https://staging.iwara.tv/node/$id/delete?destination=my-content")
                     .post(
                         FormBody.Builder()
                             .add("confirm", "1")
@@ -1520,7 +1520,7 @@ class IwaraParser(
 
                 // REQUEST TO GET FORM DATA
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/node/$id/edit?destination=my-content")
+                    .url("https://staging.iwara.tv/node/$id/edit?destination=my-content")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -1550,7 +1550,7 @@ class IwaraParser(
                 }
 
                 val saveRequest = Request.Builder()
-                    .url("https://ecchi.iwara.tv/node/$id/edit?destination=my-content")
+                    .url("https://staging.iwara.tv/node/$id/edit?destination=my-content")
                     .post(postBody.build())
                     .build()
                 val saveResponse = okHttpClient.newCall(saveRequest).await()
@@ -1570,7 +1570,7 @@ class IwaraParser(
                 okHttpClient.getCookie().init(session)
 
                 val request = Request.Builder()
-                    .url("https://ecchi.iwara.tv/user/friends")
+                    .url("https://staging.iwara.tv/user/friends")
                     .get()
                     .build()
                 val response = okHttpClient.newCall(request).await()
@@ -1629,3 +1629,4 @@ class IwaraParser(
             }
         }
 }
+
